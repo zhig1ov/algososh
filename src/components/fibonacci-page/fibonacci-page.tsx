@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, SyntheticEvent } from "react";
 import { SolutionLayout, Input, Button, Circle } from "../ui"
 import style from "./style.module.css"
 import { delay } from "../../utils/utils"
@@ -49,8 +49,14 @@ export const FibonacciPage: React.FC = () => {
   return (
     <SolutionLayout title="Последовательность Фибоначчи">   
       <form className={style.form}>
-        <Input extraClass={style.input} type='number' max={19} isLimitText={true} placeholder = "Введите число" onChange={(e: any) => setInputNumber(+e.target.value)}/>
-        <Button linkedList="small" text='Рассчитать' disabled={!!disableButton} onClick={sumbitFib}/>
+        <Input 
+          extraClass={style.input} 
+          type='number' max={19} 
+          isLimitText={true} 
+          placeholder = "Введите число" 
+          onChange={(e: any) => setInputNumber(+e.target.value)}
+        />
+        <Button linkedList="small" text='Рассчитать' isLoader={!!disableButton} onClick={sumbitFib} type="submit"/>
       </form>
       <div className={style.numberContainer}>
         <ul className={style.ul}>
