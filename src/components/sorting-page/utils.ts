@@ -1,10 +1,6 @@
 import { swap } from "../../utils/utils"
 import { ElementStates } from "../../types/element-states"
-
-export interface columnObject {
-  num: number
-  state: ElementStates
-}
+import { columnObject } from "../../types/types"
 
 export const selectionSorting = (mode: "ascending" | "descending", arrayToSort: columnObject[], step?: number): { 
 	resultArr: columnObject[]; numberOfSteps: number } => {

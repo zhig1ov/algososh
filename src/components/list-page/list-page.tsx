@@ -6,19 +6,7 @@ import { Direction } from "../../types/direction"
 import { LinkedList, ILinkedList } from "./utils"
 import { ElementStates } from "../../types/element-states"
 import { SHORT_DELAY_IN_MS } from "../../constants/delays"
-
-interface listItemProps {
-  adding?: boolean;
-  deleting?: boolean;
-  noArrow?: boolean;
-  tail?: string;
-  head?: string;
-  char?: string;
-  state?: ElementStates;
-  extraCircle?: {
-    char: string;
-  }
-}
+import { listItemProps } from "../../types/types"
 
 export const ListPage: React.FC = () => {
   const [ value, setValue ] = useState<string>("")
@@ -222,7 +210,11 @@ export const ListPage: React.FC = () => {
     setArrCircles([...copyArr]);
     await delay(SHORT_DELAY_IN_MS);
     setDisableButton(false)
-  };
+  }
+
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    setValue(e.currentTarget.value)
+  }
 
   return (
     <SolutionLayout title="Связный список">
@@ -233,9 +225,7 @@ export const ListPage: React.FC = () => {
             placeholder="Введите значение"
             min={1}
             value={value || ""}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setValue(e.currentTarget.value)
-            }
+            onChange={handleInput}
             isLimitText={true}
             maxLength={4}
           />

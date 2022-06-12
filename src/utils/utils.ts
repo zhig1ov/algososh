@@ -1,4 +1,4 @@
-import { columnObject } from "../components/sorting-page/utils"
+import { columnObject } from "../types/types"
 
 export const swap = (arr: columnObject[], firstIndex: number, secondIndex: number): void => {
   const temp = arr[firstIndex];
