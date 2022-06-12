@@ -3,12 +3,12 @@ import { SolutionLayout, Column, Button, RadioInput } from "../ui"
 import style from "./style.module.css"
 import { delay, getNumber } from "../../utils/utils"
 import { Direction } from "../../types/direction"
-import { columnObject } from "./utils"
+import { columnObject } from "../../types/types"
 import { selectionSorting, bubbleSorting } from "./utils"
 import { ElementStates } from "../../types/element-states"
 import { SHORT_DELAY_IN_MS } from "../../constants/delays"
+import { radioState } from "../../types/types"
 
-type radioState = "selection" | "bubble"
 
 export const SortingPage: React.FC = () => {
   const [ arraySort, setArraySort ] = useState<columnObject[]>([])
@@ -68,13 +68,6 @@ export const SortingPage: React.FC = () => {
     setDisableButton(false)
     mode === "ascending"? setAscending(false) : setDescending(false)
   }
-
-  const renderSort = (column: columnObject, index: number) => {
-    return (
-        <Column index={column.num} state={column.state} key={index} />
-    )
-  }
-
 
   return (
     <SolutionLayout title="Сортировка массива">

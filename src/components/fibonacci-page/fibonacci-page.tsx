@@ -48,6 +48,10 @@ export const FibonacciPage: React.FC = () => {
     )
   }
 
+  const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+    setInputNumber(+e.currentTarget.value)
+  }
+
   return (
     <SolutionLayout title="Последовательность Фибоначчи">   
       <form className={style.form}>
@@ -57,7 +61,7 @@ export const FibonacciPage: React.FC = () => {
           max={19} 
           isLimitText={true} 
           placeholder = "Введите число" 
-          onChange={(e: any) => setInputNumber(+e.target.value)}
+          onChange={handleInput}
         />
         <Button linkedList="small" text='Рассчитать' isLoader={!!inProgress} onClick={sumbitFib}  disabled={!!disableButton} type="submit"/>
       </form>
