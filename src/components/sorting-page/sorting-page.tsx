@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"
 import { SolutionLayout, Column, Button, RadioInput } from "../ui"
 import style from "./style.module.css"
 import { delay, getNumber } from "../../utils/utils"
@@ -6,34 +6,35 @@ import { Direction } from "../../types/direction"
 import { columnObject } from "./utils"
 import { selectionSorting, bubbleSorting } from "./utils"
 import { ElementStates } from "../../types/element-states"
+import { SHORT_DELAY_IN_MS } from "../../constants/delays"
 
 type radioState = "selection" | "bubble"
 
 export const SortingPage: React.FC = () => {
-  const [arraySort, setArraySort] = useState<columnObject[]>([])
-  const [checked, setChecked] = useState<radioState>("selection")
+  const [ arraySort, setArraySort ] = useState<columnObject[]>([])
+  const [ checked, setChecked ] = useState<radioState>("selection")
   const [ disableButton, setDisableButton ] = useState<Boolean>(false)
-  const [ascending, setAscending] = useState(false)
-  const [descending, setDescending] = useState(false)
+  const [ ascending, setAscending ] = useState(false)
+  const [ descending, setDescending] = useState(false)
 
   useEffect(() => {
-    createArray();
-  }, []);
+    createArray()
+  }, [])
 
   const createArray = () => {
-    const size = Math.random() * (17 - 3) + 3;
+    const size = Math.random() * (17 - 3) + 3
     const arr: columnObject[] = Array.from({ length: size }, () => ({
       num: getNumber(),
       state: ElementStates.Default,
-    }));
-    setArraySort([...arr]);
-  };
+    }))
+    setArraySort([...arr])
+  }
   console.log(arraySort)
 
   const sort = async (arr: columnObject[]) => {
-    setArraySort([...arr]);
-    await delay(500);
-  };
+    setArraySort([...arr])
+    await delay(SHORT_DELAY_IN_MS)
+  }
 
   const bubbleSort = async (mode: "ascending" | "descending") => {
 
@@ -41,7 +42,7 @@ export const SortingPage: React.FC = () => {
     mode === "ascending" ? setAscending(true) : setDescending(true)
 
     const arr = [...arraySort]
-    arr.forEach((el) => (el.state = ElementStates.Default));
+    arr.forEach((el) => (el.state = ElementStates.Default))
 
     let stepCounter = 1
     while (stepCounter !== bubbleSorting(mode, arr).numberOfSteps) {
@@ -54,7 +55,7 @@ export const SortingPage: React.FC = () => {
 
   const selectionSort = async (mode: "ascending" | "descending") => {
 
-    setDisableButton(true);
+    setDisableButton(true)
     mode === "ascending" ? setAscending(true) : setDescending(true)
 
     const arr = [...arraySort]
@@ -134,5 +135,5 @@ export const SortingPage: React.FC = () => {
         </ul>
       </div>
     </SolutionLayout>
-  );
-};
+  )
+}
