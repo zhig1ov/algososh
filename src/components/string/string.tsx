@@ -1,6 +1,7 @@
 import React, { SyntheticEvent, useState } from "react";
 import { SolutionLayout, Input, Button, Circle } from "../ui"
 import { ElementStates } from "../../types/element-states"
+import { DELAY_IN_MS } from "../../constants/delays"
 import style from "./style.module.css"
 
 interface IArraySymbol {
@@ -56,7 +57,7 @@ export const StringComponent: React.FC = () => {
 
       setSortString([...copySymbol]);
       counter++;
-    }, 1000);
+    }, DELAY_IN_MS);
   }
 
   const renderSymbols= (data: IArraySymbol, index: number) => {

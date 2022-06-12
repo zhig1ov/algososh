@@ -2,11 +2,13 @@ import React, { useEffect, useState, SyntheticEvent } from "react";
 import { SolutionLayout, Input, Button, Circle } from "../ui"
 import style from "./style.module.css"
 import { delay } from "../../utils/utils"
+import { SHORT_DELAY_IN_MS } from "../../constants/delays"
 
 export const FibonacciPage: React.FC = () => {
   const [ inputNumber, setInputNumber ] = useState<number>(0)
   const [ fibNumber, setFibNumber ] = useState<Array<number>>([])
   const [ disableButton, setDisableButton ] = useState<Boolean>(false)
+  const [ inProgress, setInProgress ] = useState<Boolean>(false)
 
   useEffect(() => {
     inputNumber > 19 || inputNumber < 1 ? setDisableButton(true) : setDisableButton(false)
@@ -26,14 +28,14 @@ export const FibonacciPage: React.FC = () => {
 
   //Расчет ряда Фибоначчи исходя из данных инпута
   const sumbitFib = async () => {
-    setDisableButton(true)
+    setInProgress(true)
     const arr = []
     for (let i = 0; i <= inputNumber + 1; i++) {
-      await delay(500)
+      await delay(SHORT_DELAY_IN_MS)
       arr.push(fib(i))
       setFibNumber([...arr])
     }
-    setDisableButton(false)  
+    setInProgress(false)  
   }
 
   //Рендер ряда Фибоначчи
@@ -51,12 +53,13 @@ export const FibonacciPage: React.FC = () => {
       <form className={style.form}>
         <Input 
           extraClass={style.input} 
-          type='number' max={19} 
+          type='number' 
+          max={19} 
           isLimitText={true} 
           placeholder = "Введите число" 
           onChange={(e: any) => setInputNumber(+e.target.value)}
         />
-        <Button linkedList="small" text='Рассчитать' isLoader={!!disableButton} onClick={sumbitFib} type="submit"/>
+        <Button linkedList="small" text='Рассчитать' isLoader={!!inProgress} onClick={sumbitFib}  disabled={!!disableButton} type="submit"/>
       </form>
       <div className={style.numberContainer}>
         <ul className={style.ul}>
