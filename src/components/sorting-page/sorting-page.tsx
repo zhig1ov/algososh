@@ -29,7 +29,6 @@ export const SortingPage: React.FC = () => {
     }))
     setArraySort([...arr])
   }
-  console.log(arraySort)
 
   const sort = async (arr: columnObject[]) => {
     setArraySort([...arr])

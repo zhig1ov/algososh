@@ -76,7 +76,7 @@ export const StringComponent: React.FC = () => {
     <SolutionLayout title="Строка">
       <form className={style.form}>
         <Input extraClass={style.input} type='string' max={11} isLimitText={true} placeholder = "Введите текст" onChange={handleInput}/>
-        <Button linkedList="small" text='Рассчитать' isLoader={!!disableButton} onClick={createCircle} type="submit"/>
+        <Button linkedList="small" text='Рассчитать' disabled={inputString.length === 0 || !!disableButton} onClick={createCircle} type="submit"/>
       </form>
       <div className={style.symbolContainer}>
         <ul className={style.ul}>

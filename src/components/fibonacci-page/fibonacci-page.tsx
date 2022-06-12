@@ -27,7 +27,7 @@ export const FibonacciPage: React.FC = () => {
   };
 
   //Расчет ряда Фибоначчи исходя из данных инпута
-  const sumbitFib = async () => {
+  const getFibonacciNumbers = async () => {
     setInProgress(true)
     const arr = []
     for (let i = 0; i <= inputNumber + 1; i++) {
@@ -63,7 +63,7 @@ export const FibonacciPage: React.FC = () => {
           placeholder = "Введите число" 
           onChange={handleInput}
         />
-        <Button linkedList="small" text='Рассчитать' isLoader={!!inProgress} onClick={sumbitFib}  disabled={!!disableButton} type="submit"/>
+        <Button linkedList="small" text='Рассчитать' isLoader={!!inProgress} onClick={getFibonacciNumbers}  disabled={inputNumber === 0 || !!disableButton} type="submit"/>
       </form>
       <div className={style.numberContainer}>
         <ul className={style.ul}>
