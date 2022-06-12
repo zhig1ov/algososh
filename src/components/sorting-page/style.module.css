@@ -3,10 +3,39 @@
   justify-content: center;
 }
 
-.buttonsContainer {
+.radioContainer {
+  margin: 18px 52px 0 0;
   display: flex;
+  gap: 40px;
 }
 
-.radioContainer {
-	display: flex;
+.buttonsContainer {
+  display: flex;
+  gap: 12px;
+  margin-right: 80px;
+}
+
+.buttonsContainer > button {
+  width: 205px;
+}
+
+.columnList {
+  list-style-type: none;
+  margin: 48px auto 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  align-content: flex-start;
+  column-gap: 16px;
+  row-gap: 48px;
+  width: 944px;
+}
+
+.wrapper {
+  height: 474px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
 }
