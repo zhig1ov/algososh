@@ -192,7 +192,6 @@ export const ListPage: React.FC = () => {
 
   const removeToIndex = async (index: number) => {
     setDisableButton(true)
-    const deletingValue = copyArr[index!].char;
     const deletedElement = linkedList!.removePos(index);
     for (let i = 0; i <= index!; i++) {
       copyArr[i].state = ElementStates.Changing;
@@ -231,28 +230,28 @@ export const ListPage: React.FC = () => {
           />
           <Button
             extraClass={style.button}
-            disabled={!value || arrCircles.length > 12}
+            disabled={!value || arrCircles.length > 12 || !!disableButton}
             text="Добавить в head"
             type="button"
             onClick={() => addHead()}
           />
           <Button
             extraClass={style.button}
-            disabled={!value || arrCircles.length > 12}
+            disabled={!value || arrCircles.length > 12 || !!disableButton}
             text="Добавить в tail"
             type="button"
             onClick={() => addTail()}
           />
           <Button
             extraClass={style.button}
-            disabled={arrCircles.length <= 1}
+            disabled={arrCircles.length <= 1 || !!disableButton}
             text="Удалить из head"
             type="button"
             onClick={() => removeFromHead()}
           />
           <Button
             extraClass={style.button}
-            disabled={arrCircles.length <= 1}
+            disabled={arrCircles.length <= 1 || !!disableButton}
             text="Удалить из tail"
             type="button"
             onClick={() => removeFromTail()}
@@ -285,7 +284,7 @@ export const ListPage: React.FC = () => {
           />
           <Button
             extraClass={style.bigButton}
-            disabled={!index || index > arrCircles.length - 1}
+            disabled={!index || index > arrCircles.length - 1 || !!disableButton}
             text="Удалить по индексу"
             type="button"
             onClick={() => index && removeToIndex(index)}

@@ -1,71 +1,67 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react"
 import { SolutionLayout, Input, Button, Circle } from "../ui"
 import { ElementStates } from "../../types/element-states"
-import { DELAY_IN_MS } from "../../constants/delays"
+import { swapString } from "./utils"
+import { listItemProps } from "../../types/types"
 import style from "./style.module.css"
-
-interface IArraySymbol {
-  symbol: string;
-  state: ElementStates;
-}
+import { delay } from "../../utils/utils"
+import { SHORT_DELAY_IN_MS } from "../../constants/delays"
 
 export const StringComponent: React.FC = () => {
   const [ inputString, setInputString ] = useState<string>("")
-  const [ sortString, setSortString ] = useState<IArraySymbol[]>([])
+  const [ sortString, setSortString ] = useState<listItemProps[]>([])
   const [ disableButton, setDisableButton ] = useState<Boolean>(false)
+
+  useEffect(() => {
+    inputString.length > 1 && inputString.length < 12 ? setDisableButton(false) : setDisableButton(true)
+  },[inputString])
   
   const handleInput = (e: SyntheticEvent<HTMLInputElement>) => {
     setInputString(e.currentTarget.value)
   }
 
-  const createCircle = () => {
-    const symbol = inputString.split("").map(
-      (symbol, i, arr) =>({ 
-        symbol,
-        state:
-          i === 0 || i === arr.length - 1
-          ? ElementStates.Changing
-          : ElementStates.Default
-      }))
-      setSortString(symbol)
-      reverseSymbol(symbol)
-  }
+  const createCircle = async () => {
+    setInputString("")
 
-  const reverseSymbol = (symbol: IArraySymbol[]) => {
     setDisableButton(true)
-    let counter = 0
-    let copySymbol = [...symbol]
 
-    const interval = setInterval(() => {
-      const first = counter;
-      const last = symbol.length - 1 - first;
+    const arrChars: listItemProps[] = []
+    inputString.split("").forEach((el) => {
+      arrChars.push({ char: el, state: ElementStates.Default })
+    })
+    setSortString([...arrChars])
+    await delay(SHORT_DELAY_IN_MS)
 
-      if (last - 1 === first || last - 2 === first) {
-        clearInterval(interval);
-        setDisableButton(false);
-      }
+    const numberSteps: number = swapString(inputString).numberSteps
 
-      copySymbol[first + 1] = { ...copySymbol[first + 1], state: ElementStates.Changing };
-      copySymbol[last - 1] = { ...copySymbol[last - 1], state: ElementStates.Changing };
+    let step = 0
+    while (step !== numberSteps) {
 
-      copySymbol[first] = { ...symbol[last], state: ElementStates.Modified };
-      copySymbol[last] = { ...symbol[first], state: ElementStates.Modified };
+      arrChars[step].state = ElementStates.Changing
+      arrChars[inputString.length - (step + 1)].state = ElementStates.Changing
+      setSortString([...arrChars])
+      await delay(SHORT_DELAY_IN_MS)
 
-      if (last - 2 === first) {
-        copySymbol[last - 1] = { ...copySymbol[last - 1], state: ElementStates.Modified };
-      }
+      swapString(inputString, step + 1).resultArray.forEach((el, idx) => {
+        arrChars[idx].char = el
+      })
 
-      setSortString([...copySymbol]);
-      counter++;
-    }, DELAY_IN_MS);
+      arrChars[step].state = ElementStates.Modified;
+      arrChars[inputString.length - (step + 1)].state = ElementStates.Modified;
+      setSortString([...arrChars])
+      await delay(SHORT_DELAY_IN_MS)
+
+      step++
+    }
+    setDisableButton(false)
   }
 
-  const renderSymbols= (data: IArraySymbol, index: number) => {
+  const renderSymbols= (data: listItemProps, index: number) => {
     return (
       <li className={`${style['list-item']}`} key={index}>
         <Circle
           key={index}
-          letter={data.symbol}
+          letter={data.char}
           state={data.state}
         />
       </li>
@@ -75,7 +71,7 @@ export const StringComponent: React.FC = () => {
   return (
     <SolutionLayout title="Строка">
       <form className={style.form}>
-        <Input extraClass={style.input} type='string' max={11} isLimitText={true} placeholder = "Введите текст" onChange={handleInput}/>
+        <Input extraClass={style.input} type='text' max={11} maxLength={11} isLimitText={true} placeholder = "Введите текст" onChange={handleInput}/>
         <Button linkedList="small" text='Рассчитать' disabled={inputString.length === 0 || !!disableButton} onClick={createCircle} type="submit"/>
       </form>
       <div className={style.symbolContainer}>
@@ -83,10 +79,10 @@ export const StringComponent: React.FC = () => {
           {sortString.map((data, index) => {
             return (
             renderSymbols(data, index)
-          );
+          )
           })}
         </ul>
       </div>
     </SolutionLayout>
-  );
-};
+  )
+}
