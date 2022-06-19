@@ -73,8 +73,8 @@ export const StackPage: React.FC = () => {
       <form className={style.form}>
         <Input placeholder = "Введите текст" type="text" maxLength={4} onChange={handleChange} isLimitText={true} value = {inputValue}/>
         <Button type="button" text="Добавить" disabled={inputValue.length === 0 || !!disableButton} onClick={push}/>
-        <Button type="button" text="Удалить" disabled={!!disableButton} onClick={pop}/>
-        <Button extraClass={style.clearButton} type="reset" text="Очистить" disabled={!!disableButton} onClick={clearStack}/>
+        <Button type="button" text="Удалить" disabled={inputValue.length === 0 || !!disableButton} onClick={pop}/>
+        <Button extraClass={style.clearButton} type="reset" text="Очистить" disabled={inputValue.length === 0 || !!disableButton} onClick={clearStack}/>
       </form>
       <ul className={style.circleList}>
       {renderValues &&

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, SyntheticEvent } from "react";
 import { SolutionLayout, Input, Button, Circle } from "../ui"
 import style from "./style.module.css"
 import { delay } from "../../utils/utils"
 import { SHORT_DELAY_IN_MS } from "../../constants/delays"
-import { fib } from "./utils"
 
 export const FibonacciPage: React.FC = () => {
   const [ inputNumber, setInputNumber ] = useState<number>(0)
@@ -11,18 +10,27 @@ export const FibonacciPage: React.FC = () => {
   const [ disableButton, setDisableButton ] = useState<Boolean>(false)
   const [ inProgress, setInProgress ] = useState<Boolean>(false)
 
-  const maxNumber = 19
-  const minNumber = 1
-
   useEffect(() => {
-    inputNumber > maxNumber || inputNumber < minNumber ? setDisableButton(true) : setDisableButton(false)
+    inputNumber > 19 || inputNumber < 1 ? setDisableButton(true) : setDisableButton(false)
   },[inputNumber])
  
+  //Функция Фиббоначи
+  const fib = (n: number, memo: Record<number, number> = {}): number => {
+    if (n in memo) {
+      return memo[n];
+    }
+    if (n <= 2) {
+      return 1;
+    }
+    memo[n] = fib(n - 1, memo) + fib(n - 2, memo);
+    return memo[n];
+  };
+
   //Расчет ряда Фибоначчи исходя из данных инпута
   const getFibonacciNumbers = async () => {
     setInProgress(true)
     const arr = []
-    for (let i = 0; i <= inputNumber; i++) {
+    for (let i = 0; i <= inputNumber + 1; i++) {
       await delay(SHORT_DELAY_IN_MS)
       arr.push(fib(i))
       setFibNumber([...arr])
