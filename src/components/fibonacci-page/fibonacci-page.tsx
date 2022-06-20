@@ -22,7 +22,7 @@ export const FibonacciPage: React.FC = () => {
   const getFibonacciNumbers = async () => {
     setInProgress(true)
     const arr = []
-    for (let i = 0; i <= inputNumber; i++) {
+    for (let i = 1; i <= inputNumber + 1; i++) {
       await delay(SHORT_DELAY_IN_MS)
       arr.push(fib(i))
       setFibNumber([...arr])
@@ -55,7 +55,8 @@ export const FibonacciPage: React.FC = () => {
           placeholder = "Введите число" 
           onChange={handleInput}
         />
-        <Button linkedList="small" text='Рассчитать' isLoader={!!inProgress} onClick={getFibonacciNumbers}  disabled={inputNumber === 0 || !!disableButton} type="submit"/>
+        <Button linkedList="small" text='Рассчитать' isLoader={!!inProgress} onClick={getFibonacciNumbers}  
+          disabled={inputNumber === 0 || !!disableButton} type="submit"/>
       </form>
       <div className={style.numberContainer}>
         <ul className={style.ul}>
