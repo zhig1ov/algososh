@@ -1,24 +1,22 @@
-const { Certificate } = require("crypto")
-
 describe('Компонент строка работатает корректно', () => {
   beforeEach(() => {
     cy.visit('http://localhost:3000/recursion')
   })
 
-  describe('Кнопка Рассчитать работает корректно', () => {
+  describe('Кнопка Развернуть работает корректно', () => {
 
     it('Если в инпуте пусто, то кнопка добавления недоступна', () => {
       cy.get('input').should('have.value', '')
-      cy.get('button').should('be.disabled')
+      cy.contains('Развернуть').should('be.disabled')
       cy.get('input').type('algososh')
-      cy.get('button').should('not.be.disabled')
+      cy.contains('Развернуть').should('not.be.disabled')
       cy.get('input').clear()
-      cy.get('button').should('be.disabled')
+      cy.contains('Развернуть').should('be.disabled')
     })
   })
 
   describe('Cтрока разворачивается корректно', () => {
-    it('', () => {
+    it('Разворот строки и анимация работает корректно', () => {
       cy.get('input').type('world')
       cy.get('button').contains('Развернуть').click()
       cy.get('[class*=circle_circle]')
