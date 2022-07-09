@@ -14,8 +14,8 @@ describe('Компонент Последовательность Фибонач
     })
   })
 
-  describe('', () => {
-    it('', () => {
+  describe('Числа генерируются корректно', () => {
+    it('Числа генерируются корректно', () => {
       cy.get('input').type('5')
       cy.get('button').contains('Рассчитать').click()
       cy.get('[class*=circle_circle]')
