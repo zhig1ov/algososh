@@ -28,16 +28,16 @@ describe('Компонент строка работатает корректн�
           if (index === 3) expect($el).to.contain('l')
           if (index === 4) expect($el).to.contain('d')
 
-        if (index === 0 || index === 4) {
-          cy.wrap($el).should(
-            'have.css',
-            'border',
-            '4px solid rgb(210, 82, 225)'
-          )
+          if (index === 0 || index === 4) {
+            cy.wrap($el).should(
+              'have.css',
+              'border',
+              '4px solid rgb(210, 82, 225)'
+            )
 
-        if (index === 0) expect($el).to.contain('w')
-        if (index === 4) expect($el).to.contain('d')
-        }
+          if (index === 0) expect($el).to.contain('w')
+          if (index === 4) expect($el).to.contain('d')
+          }
         })
 
         cy.wait(1000)
@@ -48,10 +48,11 @@ describe('Компонент строка работатает корректн�
               'have.css',
               'border',
               '4px solid rgb(127, 224, 81)'
-            )}
+            )
             
-          if (index === 0) expect($el).to.contain('d')
-          if (index === 4) expect($el).to.contain('w')
+            if (index === 0) expect($el).to.contain('d')
+            if (index === 4) expect($el).to.contain('w')
+          }
         })
 
         cy.wait(500)
@@ -62,10 +63,11 @@ describe('Компонент строка работатает корректн�
               'have.css',
               'border',
               '4px solid rgb(210, 82, 225)'
-            )}
+            )
             
-          if (index === 1) expect($el).to.contain('o')
-          if (index === 3) expect($el).to.contain('l')
+            if (index === 1) expect($el).to.contain('o')
+            if (index === 3) expect($el).to.contain('l')
+          }
         })
 
         cy.wait(500)
@@ -76,10 +78,11 @@ describe('Компонент строка работатает корректн�
               'have.css',
               'border',
               '4px solid rgb(127, 224, 81)'
-            )}
+            )
             
-          if (index === 1) expect($el).to.contain('l')
-          if (index === 3) expect($el).to.contain('o')
+            if (index === 1) expect($el).to.contain('l')
+            if (index === 3) expect($el).to.contain('o')
+          }
         })
 
         cy.wait(500)
@@ -90,9 +93,9 @@ describe('Компонент строка работатает корректн�
               'have.css',
               'border',
               '4px solid rgb(127, 224, 81)'
-            )}
-            
-          if (index === 2) expect($el).to.contain('r')
+            )  
+            expect($el).to.contain('r')
+          }
         })
 
         cy.wait(500)
@@ -103,9 +106,9 @@ describe('Компонент строка работатает корректн�
               'have.css',
               'border',
               '4px solid rgb(127, 224, 81)'
-            )}
-            
-          if (index === 2) expect($el).to.contain('r')
+            )
+            expect($el).to.contain('r')
+          }
         })
     })
   })
