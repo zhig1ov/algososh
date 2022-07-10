@@ -3,7 +3,7 @@ import renderer from "react-test-renderer"
 import { render, screen, fireEvent } from "@testing-library/react"
 import { Button } from "./button"
 
-describe('Работа компонента - button', () => {
+describe('Работа компонента button', () => {
 	it('Кнопка с текстом рендерится без ошибок', () => {
     const tree = renderer
 			.create(<Button text='Нажми меня!'/>)
