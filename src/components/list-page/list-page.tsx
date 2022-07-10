@@ -221,6 +221,7 @@ export const ListPage: React.FC = () => {
       <div className={style.flexContainer}>
         <form className={style.form}>
           <Input
+            name="value"
             extraClass={style.input}
             placeholder="Введите значение"
             min={1}
@@ -261,6 +262,7 @@ export const ListPage: React.FC = () => {
         
         <form className={style.form}>
           <Input
+            name="index"
             type="text"
             extraClass={style.input}
             placeholder="Введите индекс"
