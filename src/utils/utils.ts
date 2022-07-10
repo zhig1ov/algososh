@@ -1,6 +1,7 @@
 import { columnObject } from "../types/types"
+import { IArraySymbol } from "../components/string/string"
 
-export const swap = (arr: columnObject[], firstIndex: number, secondIndex: number): void => {
+export const swap = (arr: IArraySymbol[]| columnObject[], firstIndex: number, secondIndex: number): void => {
   const temp = arr[firstIndex];
   arr[firstIndex] = arr[secondIndex];
   arr[secondIndex] = temp;

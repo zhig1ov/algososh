@@ -1,63 +1,48 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react"
 import { SolutionLayout, Input, Button, Circle } from "../ui"
 import { ElementStates } from "../../types/element-states"
-import { DELAY_IN_MS } from "../../constants/delays"
+import { SHORT_DELAY_IN_MS } from "../../constants/delays"
+import { reverseStringAlgo } from "./utils"
 import style from "./style.module.css"
+import { delay } from "../../utils/utils"
 
-interface IArraySymbol {
-  symbol: string;
-  state: ElementStates;
+export interface IArraySymbol {
+  symbol: string
+  state: ElementStates
 }
 
 export const StringComponent: React.FC = () => {
-  const [ inputString, setInputString ] = useState<string>("")
-  const [ sortString, setSortString ] = useState<IArraySymbol[]>([])
-  const [ disableButton, setDisableButton ] = useState<Boolean>(false)
-  
-  const handleInput = (e: SyntheticEvent<HTMLInputElement>) => {
-    setInputString(e.currentTarget.value)
+
+  const [sortString, setSortString] = useState<IArraySymbol[]>([])
+  const [disableButton, setDisableButton] = useState(false)
+
+  const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSortString(e.target.value.split('').map((symbol: string) => {
+      return {
+        symbol: symbol,
+        state: ElementStates.Default
+      }
+    }))
   }
 
-  const createCircle = () => {
-    const symbol = inputString.split("").map(
-      (symbol, i, arr) =>({ 
-        symbol,
-        state:
-          i === 0 || i === arr.length - 1
-          ? ElementStates.Changing
-          : ElementStates.Default
-      }))
-      setSortString(symbol)
-      reverseSymbol(symbol)
+  const changeStateRender = async (arr: IArraySymbol[], status: ElementStates, startIndex: number, endIndex: number) => {
+    changeState(arr, status, startIndex, endIndex)
+    setSortString([...arr])
+    await delay(SHORT_DELAY_IN_MS)
   }
 
-  const reverseSymbol = (symbol: IArraySymbol[]) => {
+  const changeState = (arr: IArraySymbol[], status: ElementStates, start: number, end: number) => {
+    arr[start].state = status
+    
+    if(end) {
+      arr[end].state = status
+    }
+  }
+
+  const reverseString = async () => {
     setDisableButton(true)
-    let counter = 0
-    let copySymbol = [...symbol]
-
-    const interval = setInterval(() => {
-      const first = counter;
-      const last = symbol.length - 1 - first;
-
-      if (last - 1 === first || last - 2 === first) {
-        clearInterval(interval);
-        setDisableButton(false);
-      }
-
-      copySymbol[first + 1] = { ...copySymbol[first + 1], state: ElementStates.Changing };
-      copySymbol[last - 1] = { ...copySymbol[last - 1], state: ElementStates.Changing };
-
-      copySymbol[first] = { ...symbol[last], state: ElementStates.Modified };
-      copySymbol[last] = { ...symbol[first], state: ElementStates.Modified };
-
-      if (last - 2 === first) {
-        copySymbol[last - 1] = { ...copySymbol[last - 1], state: ElementStates.Modified };
-      }
-
-      setSortString([...copySymbol]);
-      counter++;
-    }, DELAY_IN_MS);
+    await reverseStringAlgo(sortString, changeStateRender, ElementStates.Changing, ElementStates.Modified)
+    setDisableButton(false)
   }
 
   const renderSymbols= (data: IArraySymbol, index: number) => {
@@ -74,19 +59,29 @@ export const StringComponent: React.FC = () => {
 
   return (
     <SolutionLayout title="Строка">
-      <form className={style.form}>
-        <Input extraClass={style.input} type='string' max={11} isLimitText={true} placeholder = "Введите текст" onChange={handleInput}/>
-        <Button linkedList="small" text='Развернуть' disabled={inputString.length === 0 || !!disableButton} onClick={createCircle} type="submit"/>
-      </form>
-      <div className={style.symbolContainer}>
+        <form className={`${style.form}`}>
+          <Input 
+            onChange={handleInput} 
+            extraClass={`${style.input} mr-6`} 
+            isLimitText={true} 
+            maxLength={11}
+          />
+          <Button 
+            text="Развернуть"
+            onClick={reverseString}
+            isLoader={disableButton}
+            disabled={sortString.length ? false : true}
+          />
+        </form>
+        <div className={style.symbolContainer}>
         <ul className={style.ul}>
           {sortString.map((data, index) => {
             return (
-            renderSymbols(data, index)
-          );
+              renderSymbols(data, index)
+            )
           })}
         </ul>
       </div>
     </SolutionLayout>
-  );
-};
+  )
+}

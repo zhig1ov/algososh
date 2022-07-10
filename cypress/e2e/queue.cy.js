@@ -36,20 +36,20 @@ describe('Очередь работает корректно', () => {
     cy.get('input').type('algo')
     cy.contains('Добавить').click()
     cy.get('[class*=circle_content]')
-    .each(($el, index) => {
-      if(index === 0) {
-        expect($el).to.contain('algo')
-        expect($el).to.contain('0')
-        expect($el).to.contain('head')
-        expect($el).to.contain('tail')
-        cy.wrap($el)
-          .find('[class*=circle_circle]')
-          .should(
-            'have.css',
-            'border',
-            '4px solid rgb(210, 82, 225)')
-      }
-    })
+      .each(($el, index) => {
+        if(index === 0) {
+          expect($el).to.contain('algo')
+          expect($el).to.contain('0')
+          expect($el).to.contain('head')
+          expect($el).to.contain('tail')
+          cy.wrap($el)
+            .find('[class*=circle_circle]')
+            .should(
+              'have.css',
+              'border',
+              '4px solid rgb(210, 82, 225)')
+        }
+      })
 
     cy.wait(500)
 

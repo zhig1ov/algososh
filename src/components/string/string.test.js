@@ -1,21 +1,23 @@
-import React from "react"
-import renderer from "react-test-renderer"
-import { reverseSymbol } from "./string"
+import { reverseStringAlgo } from "./utils"
 
-describe('Алгоритм разворота строки работает корректно', () => {
-  it('Корректно разворачивает строку с чётным количеством символов', () => {
-    
+describe("Тест алгоритма разворота строки", () => {
+  it("Разворот строки с чётным количеством символов", async () => {
+    const alg = await reverseStringAlgo(['a', 'l', 'g', 'o'], ()=>{})
+    expect(alg).toEqual(['o', 'g', 'l', 'a'])
   })
-
-  it('Корректно разворачивает строку с нечётным количеством символов', () => {
     
+  it("Разворот строки с  нечётным количеством символов", async () => {
+    const alg = await reverseStringAlgo(['w', 'o', 'r', 'l', 'd'], ()=>{})
+    expect(alg).toEqual(['d', 'l', 'r', 'o', 'w'])
   })
-
-  it('Корректно разворачивает строку с одним символом.', () => {
-    
+   
+  it("Разворот строки с одним символом", async () => {
+    const alg = await reverseStringAlgo(['a'], ()=>{})
+    expect(alg).toEqual(['a'])
   })
-
-  it('Корректно разворачивает пустую строку', () => {
     
+  it("Разворот пустой строки", async () => {
+    const alg = await reverseStringAlgo([''], ()=>{})
+    expect(alg).toEqual([''])
   })
 })

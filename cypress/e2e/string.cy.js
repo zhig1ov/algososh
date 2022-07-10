@@ -40,7 +40,7 @@ describe('Компонент строка работатает корректн�
           }
         })
 
-        cy.wait(1000)
+        cy.wait(500)
       
         cy.get('[class*=circle_circle]').each(($el, index) => {
           if (index === 0 || index === 4) {
