@@ -1,4 +1,4 @@
-<h1 align="center"><img src="./readme_src/algososh_header.jpeg" width="100%" alt="шапка"></h1>
+<h1 align="center"><img src="./src_readme/algososh_header.jpeg" width="100%" alt="шапка"></h1>
 
 ## Краткое описание:
 
@@ -62,4 +62,4 @@
 
 ## Проектная работа: "АЛГОСОШ". Создана в рамках учебы в [Яндекс.Практикум](https://praktikum.yandex.ru/) на курсе ["Веб-разработчик плюс"](https://practicum.yandex.ru/web-plus/).
 
-<img src="./readme_src/footer.gif" width="100%" alt="подвал">
+<img src="./src_readme/footer.gif" width="100%" alt="подвал">
