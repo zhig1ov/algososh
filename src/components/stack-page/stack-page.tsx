@@ -5,7 +5,7 @@ import { Stack, IStack } from "./utils"
 import { delay } from "../../utils/utils"
 import { columnObject } from "../../types/types"
 import { ElementStates } from "../../types/element-states"
-import { SHORT_DELAY_IN_MS } from "../../constants/delays"
+import { SHORT_DELAY_IN_MS , DELAY_IN_MS} from "../../constants/delays"
 
 const stackInst = new Stack<string>()
 
@@ -23,18 +23,23 @@ export const StackPage: React.FC = () => {
 
   const push = async () => {
     setDisableButton(true)
+    resetInput()
     stack.push(inputValue)
-    const newElement = stack.peak()
+    renderValues.forEach((el) => {
+      el.state = ElementStates.Default;
+      el.head = undefined;
+    })
+    const newElement = stack!.peak()
     renderValues.push({
-      char: newElement,
-      state: ElementStates.Changing,
-      head: "top",
-    });
+      char: newElement ? newElement : "",
+      state: ElementStates.Default, 
+    })
     setRenderValues([...renderValues])
     await delay(SHORT_DELAY_IN_MS)
-    renderValues[renderValues.length - 1].state = ElementStates.Default
+    renderValues[renderValues.length-1].head = "top"
+    renderValues[renderValues.length - 1].state = ElementStates.Changing
     setRenderValues([...renderValues])
-    resetInput()
+    await delay(SHORT_DELAY_IN_MS)
     setDisableButton(false)
   }
 
@@ -43,15 +48,14 @@ export const StackPage: React.FC = () => {
     stack!.pop()
     const size = stack.getSize()
     if (size !== 0) {
+      renderValues.pop()
+      setRenderValues([...renderValues])
+      await delay(SHORT_DELAY_IN_MS)
       renderValues[renderValues.length - 1].state = ElementStates.Changing
       renderValues[renderValues.length - 1].head = "top"
       setRenderValues([...renderValues])
-      renderValues.pop()
-      await delay(SHORT_DELAY_IN_MS)
-      setRenderValues([...renderValues])
     } else {
       setRenderValues([])
-
     }
     setDisableButton(false)
   }
@@ -73,19 +77,19 @@ export const StackPage: React.FC = () => {
       <form className={style.form}>
         <Input placeholder = "Введите текст" type="text" maxLength={4} onChange={handleChange} isLimitText={true} value = {inputValue}/>
         <Button type="button" text="Добавить" disabled={inputValue.length === 0 || !!disableButton} onClick={push}/>
-        <Button type="button" text="Удалить" disabled={inputValue.length === 0 || !!disableButton} onClick={pop}/>
-        <Button extraClass={style.clearButton} type="reset" text="Очистить" disabled={inputValue.length === 0 || !!disableButton} onClick={clearStack}/>
+        <Button type="button" text="Удалить" disabled={renderValues.length === 0 || !!disableButton} onClick={pop}/>
+        <Button extraClass={style.clearButton} type="reset" text="Очистить" disabled={renderValues.length === 0 || !!disableButton} onClick={clearStack}/>
       </form>
       <ul className={style.circleList}>
       {renderValues &&
             renderValues.map((item, index) => (
-              <li className={style.listEl} key={index}>
-                {index === renderValues.length - 1 && (
-                  <p className={style.listElInfo}>top</p>
-                )}
-                <Circle letter={item.char} state={item.state} />
-                <p className={style.listElInfo}>{index}</p>
-              </li>
+              <Circle 
+              state={item.state}
+              letter={item.char}
+              index={index}
+              key={index}
+              head={item.head}
+              />
             ))}
       </ul>
     </SolutionLayout>
