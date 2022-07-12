@@ -12,6 +12,9 @@
 - структура данных "очередь"
 - структура данных "однонаправленный связный список"
 
+[Открыть в браузере](https://mboualgososh.vercel.app/)
+<br>
+
 ## Технологии, использованные при создании:
 
 - React.js (CRA)
@@ -57,6 +60,8 @@
 ## Ссылки:
 
 [Макет](https://www.figma.com/file/RIkypcTQN5d37g7RRTFid0/Algososh_external_link)
+
+- [Ссылка на деплой](https://mboualgososh.vercel.app/)
 
 - [По вопросам доработки сайта](https://t.me/tmzlv)
 
